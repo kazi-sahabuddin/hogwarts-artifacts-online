@@ -5,15 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.hogwartsartifactsonline.artifact.Artifact;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 @Entity
 public class Wizard implements Serializable {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
 
@@ -60,5 +58,10 @@ public class Wizard implements Serializable {
 
     public Integer getNumberOfArtifacts() {
         return artifacts.size();
+    }
+
+    public void removeAllArtifacts(){
+        this.artifacts.forEach(artifact -> artifact.setOwner(null));
+        this.artifacts = new ArrayList<>();
     }
 }
