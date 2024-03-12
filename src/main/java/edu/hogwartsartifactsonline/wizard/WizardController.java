@@ -33,8 +33,7 @@ public class WizardController {
     @GetMapping
     public Result findAllWizards(){
         List<Wizard> wizardList = this.wizardService.findAll();
-        List<WizardDto> wizardDtos = wizardList.stream().map(wizard ->
-            this.wizardToWizardDtoConverter.convert(wizard)).collect(Collectors.toList());
+        List<WizardDto> wizardDtos = wizardList.stream().map(this.wizardToWizardDtoConverter::convert).collect(Collectors.toList());
         return new Result(true, StatusCode.SUCCESS, "Find All Success", wizardDtos);
     }
 
@@ -58,6 +57,13 @@ public class WizardController {
     public Result deleteWizard(@PathVariable Integer wizardId){
             this.wizardService.delete(wizardId);
         return new Result(true, StatusCode.SUCCESS, "Delete Success", null);
+    }
+
+    @PutMapping("/{wizardId}/artifacts/{artifactId}")
+    public Result assignArtifact(@PathVariable Integer wizardId, @PathVariable String artifactId){
+        this.wizardService.assignArtifact(wizardId, artifactId);
+
+        return new Result(true, StatusCode.SUCCESS, "Artifact Assignment Success");
     }
 
 
