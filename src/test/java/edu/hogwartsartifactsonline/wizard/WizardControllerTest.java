@@ -132,7 +132,7 @@ class WizardControllerTest {
     }
 
     @Test
-    void testFindWizardByIdNotFound() throws Exception {
+    void testFindWizardByIdErrorWithNonExistentId() throws Exception {
         //Given
 
         given(this.wizardService.findById(5)).willThrow(new ObjectNotFoundException("wizard", 5));
